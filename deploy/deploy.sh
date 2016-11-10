@@ -1,18 +1,23 @@
 #!/bin/bash
 
-set -e
+echo "Working directory is: "
+pwd
 
-SERVICE_NAME="hello-world"
-SERVER_USER="ubuntu"
+echo "Files in directory:" 
+ls -alR build/libs/
 
-echo "Deploying ${SERVICE_NAME} to ${SERVER_IP}"
-
-scp build/libs/*.jar ${SERVER_USER}@${SERVER_IP}:/home/ubuntu/${SERVICE_NAME}.jar
-
-echo "Deployment finished"
+SERVER_USER="ec2-user"
+BUILD_NUMBER=$SNAP_PIPELINE_COUNTER
 
 echo "Killing old application"
-ssh ${SERVER_USER}@${SERVER_IP} "pkill -f ${SERVICE_NAME}.jar"
+ssh ${SERVER_USER}@${SERVER_IP} "pkill -9 -f .jar"
 
-echo "Starting application"
-ssh ${SERVER_USER}@${SERVER_IP} "nohup java -jar /home/ubuntu/${SERVICE_NAME}.jar &> ${SERVICE_NAME}.log &"
+echo "Archive old versions"
+ssh ${SERVER_USER}@${SERVER_IP} "mkdir archive"
+ssh ${SERVER_USER}@${SERVER_IP} "mv *.jar archive/"
+
+echo "Deploying ${SERVICE_NAME} to ${SERVER_IP}"
+scp build/libs/*.jar ${SERVER_USER}@${SERVER_IP}:/home/${SERVER_USER}/
+
+echo "Starting new application"
+ssh ${SERVER_USER}@${SERVER_IP} "nohup java -jar /home/${SERVER_USER}/*.jar &> hello_world.log &"
