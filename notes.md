@@ -42,3 +42,7 @@
 
 ## Automate deployments
 
+````
+aws cloudformation update-stack --stack-name mystack --template-body file:///Users/hvocke/dev/airplus/aws-provisioning/VPC_Single_Instance_In_Subnet.template --parameters ParameterKey=KeyName,ParameterValue=snap-ci
+
+````
