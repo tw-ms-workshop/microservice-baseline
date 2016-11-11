@@ -1,12 +1,8 @@
 # Microservices Workshop
 
 ## TODO
-* Write installation instructions
-* dry run on windows VM
 * Have everyone register their own GitHub account
 * use AMI with java 8
-* create snap ci AWS user
-* let snap do an update-stack and s3 upload (install aws client)
 * excercise elements in templates/scripts
 * add s3 download to stack.json
 
