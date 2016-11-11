@@ -1,4 +1,4 @@
-# AirPlus Microservices Workshop
+# Microservices Workshop
 
 ## TODO
 * Write installation instructions
@@ -64,7 +64,7 @@
   * use s3 upload archetype
 
 ````
-aws s3 sync build/libs/ s3://ms-workshop-testbucket/snap/deployments --acl private --region eu-central-1 --delete
+aws s3 cp build/libs/*.jar s3://ms-workshop-testbucket/snap/deployments --acl private --region eu-central-1
 ````
 
 **Environment Variables**:
