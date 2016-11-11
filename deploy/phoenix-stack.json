@@ -4,7 +4,10 @@
   "Description" : "AWS CloudFormation Sample Template VPC_Single_Instance_In_Subnet: Sample template showing how to create a VPC and add an EC2 instance with an Elastic IP address and a security group. **WARNING** This template creates an Amazon EC2 instance. You will be billed for the AWS resources used if you create a stack from this template.",
 
   "Parameters" : {
-
+    "Version" : {
+      "Description" : "Version of the service to launch.",
+      "Type" : "String"
+    },
     "InstanceType" : {
       "Description" : "WebServer EC2 instance type",
       "Type" : "String",
@@ -472,7 +475,13 @@
             "DeviceName" : "/dev/sdm",
             "Ebs" : { "VolumeSize" : "100", "DeleteOnTermination" : "true"}
           }
-        ]
+        ],
+        "UserData" : { "Fn::Base64" : { "Fn::Join" : ["", [
+           "#!/bin/bash\n",
+           "aws s3 --region ", { "Ref" : "AWS::Region" }, " cp s3://ms-workshop-testbucket/snap/deployments/hello_world-", { "Ref" : "Version" }, ".jar .\n",
+           "nohup java -jar hello_world-", { "Ref" : "Version" }, ".jar > hello_world", { "Ref" : "Version" }, ".log 2>&1 &\n",
+           "/opt/aws/bin/cfn-signal -e 0 --stack ", { "Ref" : "AWS::StackName" }, " --region ", { "Ref" : "AWS::Region" }," --resource AutoScalingGroup\n"
+        ]]}}
       }
     }
   },
