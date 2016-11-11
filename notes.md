@@ -131,3 +131,12 @@ sh deploy/deploy.sh
 * **Environment Variables**: `SERVER_IP`: [IP Address of AWS Server]
 
 ### Deploy (aws)
+````
+aws s3 cp build/libs/*.jar s3://ms-workshop-testbucket/snap/deployments --acl private --region eu-central-1
+aws cloudformation update-stack --stack-name mystack --region eu-central-1 --template-body file://./deploy/phoenix-stack.json --parameters ParameterKey=KeyName,ParameterValue=snap,ParameterKey=Version,ParameterValue=$SNAP_PIPELINE_COUNTER
+````
+
+Make sure to include version parameter and new stack file.
+
+**Environment Variables**: `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+**Secure Files**: snap.pem file
