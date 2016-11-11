@@ -8,6 +8,7 @@
 * create snap ci AWS user
 * let snap do an update-stack and s3 upload (install aws client)
 * excercise elements in templates/scripts
+* add s3 download to stack.json
 
 ## Background
 * snowflake stack: VPC with EC2 instance and manual deployment
@@ -34,6 +35,7 @@
 3. Add teammates to the repository: repository settings -> collaborators
 4. Everyone clone the repo, make it run with idea: `./gradlew idea`
 4. open the application in idea and take a look around
+5. give the service a dedicated team name ?
 5. start the application server:
   * idea: run the main method
   * gradle: `./gradlew bootRun`
@@ -77,12 +79,12 @@ aws s3 cp build/libs/*.jar s3://ms-workshop-testbucket/snap/deployments --acl pr
 
 **Creating a stack**
 ````
-aws cloudformation create-stack --stack-name mystack --template-body file://./deploy/snowflake-stack.json --parameters ParameterKey=KeyName,ParameterValue=snap
+aws cloudformation create-stack --stack-name mystack --region eu-central-1 --template-body file://./deploy/snowflake-stack.json --parameters ParameterKey=KeyName,ParameterValue=snap
 ````
 
 **Updating a stack**
 ````
-aws cloudformation update-stack --stack-name mystack --template-body file://./deploy/snowflake-stack.json --parameters ParameterKey=KeyName,ParameterValue=snap
+aws cloudformation update-stack --stack-name mystack --region eu-central-1 --template-body file://./deploy/snowflake-stack.json --parameters ParameterKey=KeyName,ParameterValue=snap
 ````
 
 **Listing all stacks**
