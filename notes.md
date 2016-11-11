@@ -1,15 +1,24 @@
 # AirPlus Microservices Workshop
 
 ## TODO
-* artifact versioning
 * Write installation instructions
+* dry run on windows VM
 * Have everyone register their own GitHub account
-* wait for techops response to AWS account
-* provide cloudformation template
 * use AMI with java 8
-* copy latest deploy script to baseline repo
+* create snap ci AWS user
+* let snap do an update-stack and s3 upload (install aws client)
+* excercise elements in templates/scripts
+
+## Background
+* snowflake stack: VPC with EC2 instance and manual deployment
+* phoenix stack: VPC with auto scaling and launch configuration and S3 deployment
 
 ## Preparation
+* Get list of names
+* Create AWS Users for each participant
+* Generate key-pair for snap
+* Set up policies for cloudformation operations
+* Log in via: https://777112267569.signin.aws.amazon.com/console
 * Configure AWS CLI client with proper AWS credentials
 
 ## Technical Excercise
@@ -45,4 +54,24 @@
 ````
 aws cloudformation update-stack --stack-name mystack --template-body file:///Users/hvocke/dev/airplus/aws-provisioning/VPC_Single_Instance_In_Subnet.template --parameters ParameterKey=KeyName,ParameterValue=snap-ci
 
+````
+
+
+Cloud formation policy
+````
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt1478857799000",
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:*"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
 ````
