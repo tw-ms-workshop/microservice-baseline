@@ -77,12 +77,12 @@ aws s3 cp build/libs/*.jar s3://ms-workshop-testbucket/snap/deployments --acl pr
 
 **Creating a stack**
 ````
-aws cloudformation create-stack --stack-name mystack --template-body file:///Users/hvocke/dev/airplus/microservice-baseline/deployments/snowflake.json --parameters ParameterKey=KeyName,ParameterValue=snap-ci
+aws cloudformation create-stack --stack-name mystack --template-body file://./deploy/snowflake-stack.json --parameters ParameterKey=KeyName,ParameterValue=snap
 ````
 
 **Updating a stack**
 ````
-aws cloudformation update-stack --stack-name mystack --template-body file:///Users/hvocke/dev/airplus/microservice-baseline/deployments/snowflake.json --parameters ParameterKey=KeyName,ParameterValue=snap-ci
+aws cloudformation update-stack --stack-name mystack --template-body file://./deploy/snowflake-stack.json --parameters ParameterKey=KeyName,ParameterValue=snap
 ````
 
 **Listing all stacks**
